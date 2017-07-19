@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{
+				height: 400px;
+				width: 800px;
+				position: relative;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			.pptAll{
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 400px;
+				width: 6000px;
+			}
+			.ppt{
+				height: 400px;
+				width: 800px;
+				float: left;
+			}
+			.btns{
+				height: 20px;
+				width: 100%;
+				position: absolute;
+				left: 400px;
+				bottom: 20px;
+			}
+			.btn{
+				height: 16px;
+				width: 16px;
+				border-radius: 50%;
+				float: left;
+				background: #ccc;
+				margin: 1px;
+			}
+			.bg{
+				background: pink;
+			}
+			.btn-l, .btn-r{
+				height: 40px;
+				width: 30px;
+				position: absolute;
+				bottom: 100px;
+				color: white;
+				text-align: center;
+				line-height: 30px;
+				background: rgba(111,280,333,0.5);
+			}
+			.btn-l{
+				left: 0;
+			}
+			.btn-r{
+				right: 0;
+			}
+		</style>
+		<script src='js/jquery-1.11.3.js'></script>
+		<script>
+			$(function(){
+				var index = 0;
+				var time;
+				var length = $('.ppt').length;
+				
+				for(var i = 0;i < length; i++){
+					$('.btns').append('<div class="btn"></div>')
+				}
+				
+				function showDiv(){
+					$('.btn').eq(index).addClass('bg').siblings().removeClass('bg');
+					$('.pptAll').stop().animate({left: -index * 800 + 'px'})
+				}
+				showDiv()
+				
+				$('.box').mouseover(function(){
+					clearInterval(time)
+				})
+				
+				$('.box').mouseleave(function(){
+					setTime()
+				})
+				
+				$('.btn-l').click(function(){
+					if(index > 0){
+						index--
+					}else{
+						index = length - 1;
+					}
+					showDiv()
+				})
+
+				$('.btn-r').click(function(){
+					if(index < length - 1){
+						index++
+					}else{
+						index = 0;
+					}
+					showDiv()
+				})
+
+				setTime()
+				function setTime(){
+					time = setInterval(function(){
+						
+						index++
+						if(index > length - 1){
+							index = 0
+						}
+						showDiv()
+					},1500)
+				}
+				
+				$('.btn').on('click',function(){	
+					index = $(this).index();
+					showDiv()
+				})
+			})
+		</script>
+	</head>
+	<body>
+		<div class="box">
+			<div class="pptAll">
+				<div class="ppt"><a href=""><img src="image/42.jpg" alt="" /></a></div>
+				<div class="ppt"><a href=""><img src="image/41.jpg" alt="" /></a></div>
+				<div class="ppt"><a href=""><img src="image/43.jpg" alt="" /></a></div>
+				<div class="ppt"><a href=""><img src="image/44.jpg" alt="" /></a></div>
+				<div class="ppt"><a href=""><img src="image/48.jpg" alt="" /></a></div>
+				<div class="ppt"><a href=""><img src="image/45.jpg" alt="" /></a></div>
+			</div>
+			<div class="btn-l">&lt;</div>
+			<div class="btn-r">&gt;</div>
+			<div class="btns"></div>
+		</div>
+	</body>
+</html>
